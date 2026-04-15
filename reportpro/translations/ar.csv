@@ -1,0 +1,31 @@
+source,translated
+Purchase Invoice,فاتورة مشتريات
+Supplier Name,اسم المورد
+Due Date,تاريخ الاستحقاق
+Address,العنوان
+Contact,جهة الاتصال
+Mobile no,رقم الجوال
+Voucher No,رقم الفاتورة
+Date,التاريخ
+Item Code,كود الصنف
+Item Name,اسم الصنف
+UOM,وحدة القياس
+Received Qty.,الكمية المستلمة
+Rejected Qty,الكمية المرفوضة
+Qty,الكمية
+Basic Rate,سعر الوحدة
+Amount,الإجمالي
+Total Quantity,إجمالي الكمية
+Total,الإجمالي
+Net Weight,الوزن الصافي
+Tax and Charges,الضرائب والرسوم
+Taxes and Charges Added,الرسوم المضافة
+Taxes and Charges Deducted,الرسوم المخصومة
+Total Taxes and Charges,إجمالي الضرائب والرسوم
+Net Payable,الصافي المستحق
+Account,الحساب
+Party Type,نوع الطرف
+Party,الطرف
+Debit Amount,مبلغ المدين
+Credit Amount,مبلغ الدائن
+SL,م

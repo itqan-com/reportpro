@@ -1,0 +1,205 @@
+<div dir="rtl" style="direction: rtl; text-align: right; font-family: 'Segoe UI', Tahoma, Arial, sans-serif;">
+    {% set gl = frappe.get_list(doctype="GL Entry", fields=["account", "party_type", "party", "debit", "credit",
+    "remarks"], filters={"voucher_type": doc.doctype, "voucher_no": doc.name}) %}
+
+    <!-- ===== ترويسة الرأس ===== -->
+    <div
+        style="display:flex; justify-content:space-between; align-items:center; border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+        <div style="text-align:right; direction:rtl;">
+            <div><strong>آي بلاس لحلول التقنية</strong></div>
+            <div>اليمن - صنعاء</div>
+            <div>773148522</div>
+        </div>
+        <div style="text-align:center;">
+            <div
+                style="width:60px; height:60px; border-radius:50%; background:#e91e8c; display:flex; align-items:center; justify-content:center; margin:0 auto; color:#fff; font-size:18px; font-weight:bold;">
+                a+</div>
+        </div>
+        <div style="text-align:left; direction:ltr;">
+            <div><strong>A plus for tech solution</strong></div>
+            <div>Yemen - Sana'a</div>
+            <div>773148522</div>
+        </div>
+    </div>
+
+    <!-- معلومات الفاتورة والمورد (العمود الأول: رقم الفاتورة / العمود الثاني: المورد) -->
+    <div class="row margin-bottom">
+        <!-- العمود الأول (يمين): رقم الفاتورة والتاريخ -->
+        <div class="col-xs-6">
+            <table>
+                <tr>
+                    <td><strong>رقم الفاتورة: </strong></td>
+                    <td>{{ doc.name }}</td>
+                </tr>
+                <tr>
+                    <td><strong>التاريخ: </strong></td>
+                    <td>{{ frappe.utils.format_date(doc.creation) }}</td>
+                </tr>
+            </table>
+        </div>
+        <!-- العمود الثاني (يسار): بيانات المورد -->
+        <div class="col-xs-6">
+            <table>
+                {% if doc.supplier %}
+                <tr>
+                    <td><strong>اسم المورد: </strong></td>
+                    <td>{{ doc.supplier }}</td>
+                </tr>
+                {% endif %}
+                {% if doc.due_date %}
+                <tr>
+                    <td><strong>تاريخ الاستحقاق: </strong></td>
+                    <td>{{ frappe.utils.format_date(doc.due_date) }}</td>
+                </tr>
+                {% endif %}
+                {% if doc.address_display %}
+                <tr>
+                    <td><strong>العنوان: </strong></td>
+                    <td>{{ doc.address_display }}</td>
+                </tr>
+                {% endif %}
+                {% if doc.contact_display %}
+                <tr>
+                    <td><strong>جهة الاتصال: </strong></td>
+                    <td>{{ doc.contact_display }}</td>
+                </tr>
+                {% endif %}
+                {% if doc.contact_mobile %}
+                <tr>
+                    <td><strong>رقم الجوال: </strong></td>
+                    <td>{{ doc.contact_mobile }}</td>
+                </tr>
+                {% endif %}
+            </table>
+        </div>
+    </div>
+
+    <!-- جدول الأصناف -->
+    <div class="margin-top margin-bottom">
+        <table class="table table-bordered table-condensed" style="text-align:center;">
+            <tr>
+                <th>م</th>
+                <th>كود الصنف</th>
+                <th>اسم الصنف</th>
+                <th>وحدة القياس</th>
+                <th>الكمية المستلمة</th>
+                <th>الكمية المرفوضة</th>
+                <th>الكمية</th>
+                <th>سعر الوحدة</th>
+                <th>الإجمالي</th>
+            </tr>
+            {% for item in doc.items %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ item.item_code if item.item_code }}</td>
+                <td>{{ item.item_name if item.item_name }}</td>
+                <td>{{ item.uom if item.uom }}</td>
+                <td>{{ item.received_qty if item.received_qty }}</td>
+                <td>{{ item.rejected_qty if item.rejected_qty }}</td>
+                <td>{{ item.qty if item.qty }}</td>
+                <td>{{ item.rate if item.rate }}</td>
+                <td>{{ item.amount if item.amount }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- الإجماليات والضرائب (العمود الأول: الضرائب / العمود الثاني: الإجمالي) -->
+    <div class="row margin-bottom">
+        <!-- العمود الأول (يمين): الضرائب والرسوم -->
+        <div class="col-xs-6">
+            <table>
+                {% if doc.taxes_and_charges %}
+                <tr>
+                    <td><strong>الضرائب والرسوم: </strong></td>
+                    <td>{{ doc.taxes_and_charges }}</td>
+                </tr>
+                {% endif %}
+                {% for tax in doc.taxes %}
+                {% if tax.tax_amount_after_discount_amount and tax.tax_amount_after_discount_amount != 0 %}
+                <tr>
+                    <td><strong>{{ tax.account_head }}: </strong></td>
+                    <td>{{ tax.tax_amount_after_discount_amount }}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                {% if doc.taxes_and_charges_added and doc.taxes_and_charges_added != 0 %}
+                <tr>
+                    <td><strong>الرسوم المضافة: </strong></td>
+                    <td>{{ doc.taxes_and_charges_added }}</td>
+                </tr>
+                {% endif %}
+                {% if doc.taxes_and_charges_deducted and doc.taxes_and_charges_deducted != 0 %}
+                <tr>
+                    <td><strong>الرسوم المخصومة: </strong></td>
+                    <td>{{ doc.taxes_and_charges_deducted }}</td>
+                </tr>
+                {% endif %}
+                {% if doc.total_taxes_and_charges %}
+                <tr>
+                    <td><strong>إجمالي الضرائب والرسوم: </strong></td>
+                    <td>{{ doc.total_taxes_and_charges }}</td>
+                </tr>
+                {% endif %}
+                {% if doc.grand_total %}
+                <tr>
+                    <td><strong>الصافي المستحق: </strong></td>
+                    <td>{{ doc.grand_total }}</td>
+                </tr>
+                {% endif %}
+            </table>
+        </div>
+        <!-- العمود الثاني (يسار): إجمالي الكمية والمبالغ -->
+        <div class="col-xs-6">
+            <table>
+                {% if doc.total_qty %}
+                <tr>
+                    <td><strong>إجمالي الكمية: </strong></td>
+                    <td>{{ doc.total_qty }}</td>
+                </tr>
+                {% endif %}
+                {% if doc.total %}
+                <tr>
+                    <td><strong>الإجمالي: </strong></td>
+                    <td>{{ doc.total }}</td>
+                </tr>
+                {% endif %}
+                {% if doc.total_net_weight %}
+                <tr>
+                    <td><strong>الوزن الصافي: </strong></td>
+                    <td>{{ doc.total_net_weight }}</td>
+                </tr>
+                {% endif %}
+            </table>
+        </div>
+    </div>
+
+    <!-- جدول القيود المحاسبية -->
+    <div class="margin-top">
+        <table class="table table-bordered table-condensed" style="text-align:center;">
+            <tr>
+                <th>م</th>
+                <th>الحساب</th>
+                <th>نوع الطرف</th>
+                <th>الطرف</th>
+                <th>مبلغ المدين</th>
+                <th>مبلغ الدائن</th>
+            </tr>
+            {% for entries in gl %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ entries.account if entries.account }}</td>
+                <td>{{ entries.party_type if entries.party_type }}</td>
+                <td>{{ entries.party if entries.party }}</td>
+                <td>{{ entries.debit if entries.debit }}</td>
+                <td>{{ entries.credit if entries.credit }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="4"><strong>الإجمالي</strong></td>
+                <td>{{ doc.grand_total | flt }}</td>
+                <td>{{ doc.grand_total | flt }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
