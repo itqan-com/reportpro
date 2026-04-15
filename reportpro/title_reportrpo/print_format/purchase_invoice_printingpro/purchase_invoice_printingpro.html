@@ -161,7 +161,16 @@
                 {% if doc.total %}
                 <tr>
                     <td><strong>الإجمالي: </strong></td>
-                    <td>{{ doc.total }}</td>
+                    <td>{{ frappe.utils.fmt_money(doc.total) }}</td>
+                </tr>
+                {% endif %}
+                {% if doc.in_words %}
+                {% set raw_words = doc.in_words | replace('only.', '') | replace('only', '') | trim %}
+                {% set words_parts = raw_words.split(' ') %}
+                {% set clean_words = words_parts[1:] | join(' ') | trim %}
+                <tr>
+                    <td><strong>المبلغ كتابةً: </strong></td>
+                    <td style="font-style: italic;">فقط {{ clean_words }}</td>
                 </tr>
                 {% endif %}
                 {% if doc.total_net_weight %}
