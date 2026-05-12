@@ -1,0 +1,22 @@
+{
+ "creation": "2026-04-21 20:50:00",
+ "custom_format": 1,
+ "disabled": 0,
+ "doc_type": "General Ledger",
+ "doctype": "Print Format",
+ "format_data": "[{\"fieldname\": \"html\", \"fieldtype\": \"HTML\", \"options\": \"<div id='page-header'></div>\"}]",
+ "html": "",
+ "idx": 0,
+ "margin_bottom": 0.5,
+ "margin_left": 0.5,
+ "margin_right": 0.5,
+ "margin_top": 0.5,
+ "modified": "2026-04-21 20:50:00",
+ "modified_by": "Administrator",
+ "module": "title reportrpo",
+ "name": "General Ledger Pro",
+ "owner": "Administrator",
+ "page_break_before_element": "",
+ "print_heading": "General Ledger Report",
+ "standard": 0
+}
