@@ -1,0 +1,306 @@
+<style>
+    @font-face {
+        font-family: 'Tajawal';
+        src: url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+    }
+
+    .print-wrapper {
+        font-family: 'Tajawal', Tahoma, Arial, sans-serif;
+        direction: rtl;
+        position: relative;
+        min-height: 800px;
+        color: #000;
+        /* منع أي خلفية بيضاء من تغطية العلامة المائية */
+        background-color: transparent !important;
+    }
+
+    /* 1. طبقة العلامة المائية المستقلة (مخصصة لمحرك الطباعة في ERPNext) */
+    .watermark-layer {
+        position: absolute;
+        top: 20%;
+        /* نزول الشعار للوسط قليلاً */
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        width: 85%;
+        /* حجم يملأ الصفحة */
+        max-width: 800px;
+        z-index: 1;
+        /* إبقاء العلامة المائية في الخلف */
+        pointer-events: none;
+        text-align: center;
+    }
+
+    /* 2. طبقة المحتوى لضمان بقاء النصوص والجداول فوق العلامة المائية */
+    .content-layer {
+        position: relative;
+        z-index: 10;
+    }
+
+    .header-box {
+        border: 1px solid #ccc;
+        padding: 10px 15px;
+        margin-bottom: 25px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .header-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: none;
+    }
+
+    .header-table td {
+        border: none;
+        vertical-align: middle;
+    }
+
+    .logo-container svg {
+        display: block;
+        margin: 0 auto;
+    }
+
+    .doc-info-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 25px;
+        font-weight: bold;
+        font-size: 15px;
+    }
+
+    .doc-info-table td {
+        border: none;
+        vertical-align: top;
+    }
+
+    .main-title {
+        font-size: 20px;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .details-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid #000;
+        margin-bottom: 25px;
+        font-size: 14px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .details-table th {
+        border: 1px solid #000;
+        padding: 8px;
+        background-color: #d9d9d9 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        color: #000;
+    }
+
+    .details-table td {
+        border: 1px solid #000;
+        padding: 12px 8px;
+    }
+
+    .summary-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: none;
+        margin-bottom: 60px;
+        font-weight: bold;
+        font-size: 15px;
+    }
+
+    .summary-table td {
+        border: none;
+        vertical-align: middle;
+    }
+
+    .signatures-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: none;
+        margin-top: 50px;
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .signatures-table td {
+        border: none;
+        text-align: center;
+    }
+</style>
+
+<div class="print-wrapper">
+
+    <div class="watermark-layer">
+        <svg viewBox="0 0 100 100" style="width: 100%; height: auto;">
+            <g opacity="0.08">
+                <circle cx="50" cy="50" r="45" fill="#f05a5a" />
+                <path d="M 50 5 A 45 45 0 0 1 95 50 L 50 50 Z" fill="#d94848" opacity="0.4" />
+                <text x="45" y="66" font-family="'Segoe UI', Arial, sans-serif" font-size="46" font-weight="bold"
+                    fill="#ffffff" text-anchor="middle">a</text>
+                <text x="73" y="52" font-family="'Segoe UI', Arial, sans-serif" font-size="34" font-weight="bold"
+                    fill="#ffffff" text-anchor="middle">+</text>
+            </g>
+        </svg>
+    </div>
+
+    <div class="content-layer">
+        <div class="header-box">
+            <table class="header-table">
+                <tr>
+                    <td
+                        style="width: 33%; text-align: left; direction: ltr; font-weight: bold; font-size: 15px; line-height: 1.5;">
+                        A plus for tech solution<br>
+                        Yemen-sana'a<br>
+                        773148522
+                    </td>
+                    <td style="width: 34%; text-align: center;" class="logo-container">
+                        <svg width="90" height="90" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="45" fill="#f05a5a" />
+                            <path d="M 50 5 A 45 45 0 0 1 95 50 L 50 50 Z" fill="#d94848" opacity="0.4" />
+                            <text x="45" y="66" font-family="'Segoe UI', Arial, sans-serif" font-size="46"
+                                font-weight="bold" fill="#ffffff" text-anchor="middle">a</text>
+                            <text x="73" y="52" font-family="'Segoe UI', Arial, sans-serif" font-size="34"
+                                font-weight="bold" fill="#ffffff" text-anchor="middle">+</text>
+                        </svg>
+                    </td>
+                    <td
+                        style="width: 33%; text-align: right; direction: rtl; font-weight: bold; font-size: 16px; line-height: 1.5;">
+                        آي بلاس لحلول التقنية<br>
+                        اليمن - صنعاء<br>
+                        773148522
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <table class="doc-info-table">
+            <tr>
+                <td style="width: 30%; text-align: right;">
+                    رقم السند &nbsp;&nbsp;&nbsp;&nbsp; {{ doc.name }}
+                </td>
+                <td style="width: 40%; text-align: center;">
+                    <div class="main-title">سند قبض نقداً</div>
+                    <div>اسم الصندوق &nbsp;&nbsp;&nbsp;&nbsp; {{ doc.paid_to | default('الصندوق الرئيسي', true) }}</div>
+                </td>
+                <td style="width: 30%; text-align: left; direction: ltr;">
+                    <span style="direction: rtl; display: inline-block;">التاريخ &nbsp;&nbsp;&nbsp;&nbsp; {{
+                        doc.get_formatted("posting_date") }}</span>
+                </td>
+            </tr>
+        </table>
+
+        <table class="details-table">
+            <thead>
+                <tr>
+                    <th style="width: 5%;">م</th>
+                    <th style="width: 15%;">رقم الحساب</th>
+                    <th style="width: 25%;">اسم الحساب</th>
+                    <th style="width: 15%;">القيمة الدائنة</th>
+                    <th style="width: 40%;">البيان</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>
+                        {% set acc_no = doc.party or doc.paid_from %}
+                        {% if acc_no %}
+                        {{ acc_no }}
+                        {% else %}
+                        123031
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% set acc_name = doc.party_name or doc.party %}
+                        {% if acc_name %}
+                        {{ acc_name }}
+                        {% else %}
+                        نسيم حاتم
+                        {% endif %}
+                    </td>
+                    <td>{{ "{:,.2f}".format(doc.paid_amount | default(0, true)) }}</td>
+                    <td>{{ doc.remarks or 'مقابل سداد دفعة من مديونيتكم' }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="summary-table">
+            <tr>
+                <td style="width: 20%; text-align: right;">المبلغ المستلم</td>
+                <td style="width: 15%; text-align: right; font-size: 16px;">{{ "{:,.2f}".format(doc.paid_amount |
+                    default(0, true)) }}</td>
+                <td style="width: 65%; text-align: center;">
+
+                    {# بناء مفقّط حسابي مباشر بدون استخدام دوال النظام المعقدة #}
+                    {% set amt = (doc.paid_amount | default(0, true)) | int %}
+
+                    {% set ones = ['', 'واحد', 'اثنان', 'ثلاثة', 'أربعة', 'خمسة', 'ستة', 'سبعة', 'ثمانية', 'تسعة',
+                    'عشرة', 'أحد عشر', 'اثنا عشر', 'ثلاثة عشر', 'أربعة عشر', 'خمسة عشر', 'ستة عشر', 'سبعة عشر', 'ثمانية
+                    عشر', 'تسعة عشر'] %}
+                    {% set tens = ['', '', 'عشرون', 'ثلاثون', 'أربعون', 'خمسون', 'ستون', 'سبعون', 'ثمانون', 'تسعون'] %}
+                    {% set hundreds = ['', 'مائة', 'مائتان', 'ثلاثمائة', 'أربعمائة', 'خمسمائة', 'ستمائة', 'سبعمائة',
+                    'ثمانمائة', 'تسعمائة'] %}
+
+                    {% set thousands = (amt / 1000) | int %}
+                    {% set remainder = amt % 1000 %}
+
+                    {% set h = (remainder / 100) | int %}
+                    {% set t_o = remainder % 100 %}
+
+                    {# حساب الآلاف #}
+                    {% set text_th = '' %}
+                    {% if thousands == 1 %} {% set text_th = 'ألف' %}
+                    {% elif thousands == 2 %} {% set text_th = 'ألفان' %}
+                    {% elif thousands >= 3 and thousands <= 10 %} {% set text_th=ones[thousands] ~ ' آلاف' %} {% elif
+                        thousands> 10 and thousands < 20 %} {% set text_th=ones[thousands] ~ ' ألفاً' %} {% elif
+                            thousands>= 20 %}
+                            {% set th_o = thousands % 10 %}
+                            {% set th_t = (thousands / 10) | int %}
+                            {% set text_th = (ones[th_o] ~ ' و ' if th_o > 0 else '') ~ tens[th_t] ~ ' ألفاً' %}
+                            {% endif %}
+
+                            {# حساب المئات #}
+                            {% set text_h = hundreds[h] %}
+
+                            {# حساب العشرات والآحاد #}
+                            {% set text_to = '' %}
+                            {% if t_o > 0 %}
+                            {% if t_o < 20 %} {% set text_to=ones[t_o] %} {% else %} {% set o=t_o % 10 %} {% set t=(t_o
+                                / 10) | int %} {% set text_to=(ones[o] ~ ' و ' if o> 0 else '') ~ tens[t] %}
+                                {% endif %}
+                                {% endif %}
+
+                                {# تجميع الجملة #}
+                                {% set res = text_th %}
+                                {% if text_h != '' %}
+                                {% set res = (res ~ ' و ' if res != '' else '') ~ text_h %}
+                                {% endif %}
+                                {% if text_to != '' %}
+                                {% set res = (res ~ ' و ' if res != '' else '') ~ text_to %}
+                                {% endif %}
+
+                                {% if amt == 0 %}
+                                {% set words = 'فقط صفر ريال يمني لا غير' %}
+                                {% else %}
+                                {% set words = 'فقط ' ~ res ~ ' ريال يمني لا غير' %}
+                                {% endif %}
+
+                                {{ words }}
+                </td>
+            </tr>
+        </table>
+
+        <table class="signatures-table">
+            <tr>
+                <td style="text-align: right; width: 33%;">توقيع المستلم</td>
+                <td style="text-align: center; width: 34%;">توقيع المحاسب</td>
+                <td style="text-align: left; width: 33%;">امين الصندوق</td>
+            </tr>
+        </table>
+    </div>
+</div>
